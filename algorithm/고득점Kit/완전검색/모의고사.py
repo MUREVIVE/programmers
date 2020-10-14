@@ -1,0 +1,47 @@
+"""
+    count = 0
+    for i in range(len(answers)):
+        if people1[i] == answers[i]:
+            count += 1
+    # answer[0].append(count)
+    answer.append(count)
+    count = 0
+    for i in range(len(answers)):
+        if people2[i] == answers[i]:
+            count += 1
+    answer.append(count)
+
+    count = 0
+    for i in range(len(answers)):
+        if people3[i] == answers[i]:
+            count += 1
+    answer.append(count)
+"""
+
+
+def solution(answers):
+    answer = []
+    answer_temp = []
+
+    count1, count2, count3 = 0, 0, 0
+
+    one = [1, 2, 3, 4, 5]
+    two = [2, 1, 2, 3, 2, 4, 2, 5]
+    three = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+
+    for i in range(len(answers)):
+        if answers[i] == one[i % len(one)]:
+            count1 += 1
+        if answers[i] == two[i % len(two)]:
+            count2 += 1
+        if answers[i] == three[i % len(three)]:
+            count3 += 1
+
+    answer_temp = [count1, count2, count3]
+
+    # for문에서 두 개의 변수에 대해 처리해야 한다면 enumerate 사용
+    for person, score in enumerate(answer_temp):
+        if score == max(answer_temp):
+            answer.append(person + 1)
+
+    return answer
