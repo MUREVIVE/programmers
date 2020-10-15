@@ -1,40 +1,42 @@
 
-# dfs
+# dfs 
 def solution(numbers, target):
-    n = len(numbers)
-    cnt = 0
+    answer = 0
     
-    def dfs(L, total):
-        if L == n:
-            if total == target:
-                nonlocal cnt
-                cnt += 1
+    def dfs(sum, idx):
+        # base case
+        if idx == len(numbers): # numbers들을 다 체크한 경우
+            if sum == target:
+                nonlocal answer # nonlocal : dfs함수의 바깥쪽에 있는 지역 변수의 값을 변경
+                answer += 1
         else:
-            dfs(L+1, total+numbers[L])
-            dfs(L+1, total-numbers[L])
+            dfs(sum + numbers[idx], idx + 1)
+            dfs(sum - numbers[idx], idx + 1)
     
-    dfs(0,0)
-    return cnt
+    dfs(0, 0)
+    return answer
 
 
 #######################################################################
 
-# bfs
+# bfs - deque에 익숙하지 않은듯.
 
-import collections
+from collections import deque
 
 def solution(numbers, target):
     answer = 0
-    stack = collections.deque([(0, 0)])
-    while stack:
-        current_sum, num_idx = stack.popleft()
-
-        if num_idx == len(numbers):
-            if current_sum == target:
+    # TypeError: 'type' object is not subscriptable
+    # Q = deque[(0, 0)]
+    Q = deque([(0, 0)])
+    
+    while Q:
+        sum, idx = Q.popleft()
+        
+        if idx == len(numbers):
+            if sum == target:
                 answer += 1
         else:
-            number = numbers[num_idx]
-            stack.append((current_sum+number, num_idx + 1))
-            stack.append((current_sum-number, num_idx + 1))
-
+            Q.append((sum + numbers[idx], idx + 1))    
+            Q.append((sum - numbers[idx], idx + 1))    
+            
     return answer
