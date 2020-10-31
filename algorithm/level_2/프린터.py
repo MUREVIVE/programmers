@@ -1,21 +1,27 @@
+
 def solution(priorities, location):
     answer = 0
     
     array1 = [c for c in range(len(priorities))]
+    # array2 = array1.copy() # array1은 priorities배열이라고 착각해서;;
     array2 = priorities.copy()
-    
     i = 0
+    print(array1, array2)
     while True:
-        if array2[i] < max(array2[i+1:]): # 더 중요도 높은 문서가 존재한다면
-            array1.append(array1.pop(i))
+        if array2[i] < max(array2[i+1:]):
+            # pop : 젤 앞의 원소 / append : 젤 뒤에다가
+            array1.append(array1.pop(i)) # [0, 1, 2, 3] -> [1, 2, 3, 0]
             array2.append(array2.pop(i))
+            print(array1, array2)
         else:
             i += 1
         
-        if array2 == sorted(array2, reverse=True):
+        if array2 == sorted(array2, reverse=True): # 내림차순 정렬 형태가 된다면
             break
         
     return array1.index(location) + 1
+
+
 
 
 ###################################################################################
