@@ -19,22 +19,50 @@ def solution(prices):
 
 ########################################################
 
-# deque를 이용한 풀이
-
 from collections import deque
+
 def solution(prices):
     answer = []
+    # print(prices) # [1, 2, 3, 2, 3]
     prices = deque(prices)
+    # print(prices) # deque([1, 2, 3, 2, 3])
+    
     while prices:
-        c = prices.popleft()
-
+        c = prices.popleft() 
+        # print(c) # 1 // 2 // 3 // 2 // 3
         count = 0
+        
         for i in prices:
-            if c > i:
-                count += 1
-                break
             count += 1
-
+            if c > i:    
+                break
+    
         answer.append(count)
-
+        
     return answer
+
+# 시행착오
+# answer = [(p, i) for i, p in enumerate(prices)] 이건 굳이 이렇게 안해도 되겠다.
+    
+    # for i, p in enumerate(prices):
+    #     # print(prices[i+1:])
+    #     if p <= min(prices[i+1:]):
+    #         answer.append(len(prices) - 1 - i)
+    #     else:
+    #         answer.append(prices.index(i+1) - i - 1)
+
+## 시간 초과(enumerate 때문에)
+# def solution(prices): 
+#     answer = []
+    
+#     for i, p in enumerate(prices):
+#         count = 0
+#         pos = i
+        
+#         while pos < len(prices) and p <= prices[pos]:
+#             pos += 1
+#             if pos < len(prices):
+#                 count += 1
+        
+#         answer.append(count)
+#     return answer
