@@ -39,11 +39,47 @@ def solution(n):
     return answer
 
 
-    ####################################################################
+####################################################################
 
+# 다른 풀이 - 2 / 리스트 설정 관련 오해 / TypeError 체크
+    def solution(n):
+    
+    # 리스트 설정 
+    # ex : n=4 -> [[0], [0, 0], [0, 0, 0], [0, 0, 0, 0]]
+    lst = [[0] * i for i in range(1, n + 1)]
+    print(lst)
+    # 남, 동, 북서
+    dy = [1, 0, -1]
+    dx = [0, 1, -1]
+    num = 1 # 시작 값
+    d = 0
+    y = x = 0
+    
+    while num <= n*(n+1)//2:
+        lst[y][x] = num
+        num += 1
+        # 다음 좌표 값 설정
+        ny = y + dy[d]
+        nx = x + dx[d]
+        
+        # 범위 체크 - nx 주의
+        if 0 <= ny < n and 0 <= nx <= ny and lst[ny][nx] == 0:
+            # TypeError: cannot unpack non-iterable int object / ny=y, nx=x
+            y = ny
+            x = nx
+        else:
+            # 방향 바꾸기
+            d = (d + 1) % 3 
+            y = y + dy[d]
+            x = x + dx[d]
+        
+    
+    return sum(lst, [])
+
+####################################################################
     # 다른 풀이
 
-    import itertools
+import itertools
 
 
 def get_next(cur_y, cur_x, cur_d):
