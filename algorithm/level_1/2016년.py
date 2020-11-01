@@ -45,6 +45,8 @@ def getDayName(a,b):
     }
     days = 0
     for i in range(1, a):
+        # KeyError: 1 / 이 경우 index type이 잘못 됐음.
+        # days += month_dict[i]
         days += month_dict[str(i)]
     days += b
     index = days % 7
